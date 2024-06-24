@@ -9,8 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 type SignupProps = {};
 
@@ -21,6 +24,9 @@ const Signup: React.FC<SignupProps> = () => {
     password: "",
   });
   const [role, setRole] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputForm((prev) => ({
@@ -33,9 +39,33 @@ const Signup: React.FC<SignupProps> = () => {
     setRole(value);
   };
 
+  const handleSignup = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    axios
+      .post("/api/signup", {
+        ...inputForm,
+        role,
+      })
+      .then(() => {
+        toast({ title: "Registered Successfully, Login to your account" });
+        router.push("/login");
+      })
+      .catch((error) => {
+        console.log("handleSignup Error", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <div className="bg-gray-100 rounded w-full mt-5 p-4 h-[calc(100vh-184px)] flex items-center justify-center">
-      <div className="flex flex-col items-center gap-4 p-4 rounded bg-[#ebebeb] max-w-[450px] w-full">
+      <form
+        onSubmit={handleSignup}
+        className="flex flex-col items-center gap-4 p-4 rounded bg-[#ebebeb] max-w-[450px] w-full"
+      >
         <h2 className="text-2xl font-bold">Signup</h2>
 
         <div className="flex flex-col gap-3 w-full">
@@ -77,14 +107,16 @@ const Signup: React.FC<SignupProps> = () => {
           </Select>
         </div>
 
-        <Button className="w-full mt-1">Signup</Button>
+        <Button className="w-full mt-1" type="submit" disabled={isLoading}>
+          Signup
+        </Button>
         <div className="text-[15px] mt-1">
           Already have an account?{" "}
           <Link href="/login" className="text-primary font-bold">
             Login
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
