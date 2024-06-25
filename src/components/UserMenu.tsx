@@ -22,7 +22,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ children, currentUser }) => {
       <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel>{currentUser?.name} </DropdownMenuLabel>
-        <DropdownMenuLabel className="bg-primary p-1 w-fit rounded-md text-white text-xs ml-2">
+        <DropdownMenuLabel className="bg-primary px-2 py-1 w-fit rounded-md text-white text-xs ml-2">
           {currentUser?.role}
         </DropdownMenuLabel>
 

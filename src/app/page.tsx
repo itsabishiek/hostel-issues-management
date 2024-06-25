@@ -22,7 +22,7 @@ export default async function Home() {
           </div>
         </div>
 
-        <Button asChild>
+        <Button asChild className="font-bold">
           <Link href="/issues/new">New issue</Link>
         </Button>
       </div>

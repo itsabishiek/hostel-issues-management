@@ -1,5 +1,6 @@
+import getCurrentUser from "@/app/actions/getCurrentUser";
 import getIssueById from "@/app/actions/getIssueById";
-import { Button } from "@/components/ui/button";
+import CloseIssue from "@/components/CloseIssue";
 import { CircleCheck, CircleDot } from "lucide-react";
 import moment from "moment";
 import React from "react";
@@ -12,6 +13,7 @@ type IssueProps = {
 
 const Issue: React.FC<IssueProps> = async ({ params: { issueId } }) => {
   const issue = await getIssueById({ issueId });
+  const currentUser = await getCurrentUser();
 
   return (
     <div className="bg-gray-100 rounded w-full mt-5 p-4 h-[calc(100vh-184px)] flex items-center justify-center">
@@ -68,7 +70,19 @@ const Issue: React.FC<IssueProps> = async ({ params: { issueId } }) => {
           </div>
         </div>
 
-        <Button>Close Issue</Button>
+        {issue?.issueStatus === "Open" && (
+          <CloseIssue
+            issueId={issueId}
+            issue={issue}
+            currentUser={currentUser}
+          />
+        )}
+
+        {issue?.issueStatus === "Closed" && (
+          <div className="border border-orange-400 px-2 py-1 bg-orange-100 w-fit rounded-full text-[14px] font-semibold">
+            Closed on {moment(issue?.updatedAt).fromNow()}
+          </div>
+        )}
       </div>
     </div>
   );
