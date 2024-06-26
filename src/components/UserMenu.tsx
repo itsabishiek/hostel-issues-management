@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 type UserMenuProps = {
   children: React.ReactNode;
@@ -27,6 +28,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ children, currentUser }) => {
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
+
+        {(currentUser?.role === "Principal" ||
+          currentUser?.role === "Executive Director") && (
+          <DropdownMenuItem asChild>
+            <Link href="/issues/open">Pending Issues</Link>
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
       </DropdownMenuContent>
