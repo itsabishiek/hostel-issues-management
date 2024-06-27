@@ -3,11 +3,12 @@ import prisma from "@/lib/prismadb";
 
 export const POST = async (req: Request) => {
   try {
-    const { name, rollNo, department, roomNo, issueTitle, issueDesc } =
+    const { userId, name, rollNo, department, roomNo, issueTitle, issueDesc } =
       await req.json();
 
     const issue = await prisma.issue.create({
       data: {
+        userId,
         name,
         rollNo,
         department,
@@ -15,9 +16,6 @@ export const POST = async (req: Request) => {
         issueTitle,
         issueDesc,
         issueStatus: "Open",
-        isPRO: true,
-        isPrincipal: false,
-        isED: false,
       },
     });
 

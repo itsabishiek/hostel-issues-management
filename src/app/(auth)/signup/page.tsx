@@ -23,7 +23,11 @@ const Signup: React.FC<SignupProps> = () => {
     email: "",
     password: "",
   });
+  const [rollNo, setRollNo] = useState("");
+  const [roomNo, setRoomNo] = useState("");
   const [role, setRole] = useState("");
+  const [department, setDepartment] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
@@ -39,14 +43,36 @@ const Signup: React.FC<SignupProps> = () => {
     setRole(value);
   };
 
+  const handleDeptChange = (value: string) => {
+    setDepartment(value);
+  };
+
+  console.log(!rollNo, !roomNo);
+
   const handleSignup = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!inputForm.name || !inputForm.email || !inputForm.password || !role) {
+      toast({ title: "All the fields are mandatory!" });
+      return;
+    }
+
+    if (role === "Student") {
+      if (!department || !rollNo || !roomNo) {
+        toast({ title: "All the fields are mandatory!" });
+        return;
+      }
+    }
+
     setIsLoading(true);
 
     axios
       .post("/api/signup", {
         ...inputForm,
         role,
+        department,
+        rollNo,
+        roomNo,
       })
       .then(() => {
         toast({ title: "Registered Successfully, Login to your account" });
@@ -98,6 +124,7 @@ const Signup: React.FC<SignupProps> = () => {
               <SelectValue placeholder="Select Role" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="Student">Student</SelectItem>
               <SelectItem value="PRO">PRO</SelectItem>
               <SelectItem value="Principal">Principal</SelectItem>
               <SelectItem value="Executive Director">
@@ -105,6 +132,44 @@ const Signup: React.FC<SignupProps> = () => {
               </SelectItem>
             </SelectContent>
           </Select>
+
+          {role === "Student" && (
+            <>
+              <div className="flex items-center gap-2">
+                <Input
+                  type="text"
+                  className="bg-gray-100"
+                  placeholder="Student RollNo"
+                  name="rollNo"
+                  value={rollNo}
+                  onChange={(e) => setRollNo(e.target.value)}
+                />
+                <Input
+                  type="text"
+                  className="bg-gray-100"
+                  placeholder="Hostel RoomNo"
+                  name="roomNo"
+                  value={roomNo}
+                  onChange={(e) => setRoomNo(e.target.value)}
+                />
+              </div>
+              <Select onValueChange={handleDeptChange}>
+                <SelectTrigger className="w-full bg-gray-100">
+                  <SelectValue placeholder="Select Department" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="AIML">AIML</SelectItem>
+                  <SelectItem value="AIDS">AIDS</SelectItem>
+                  <SelectItem value="CSE">CSE</SelectItem>
+                  <SelectItem value="IT">IT</SelectItem>
+                  <SelectItem value="ECE">ECE</SelectItem>
+                  <SelectItem value="EEE">EEE</SelectItem>
+                  <SelectItem value="CSBS">CSBS</SelectItem>
+                  <SelectItem value="MECH">MECH</SelectItem>
+                </SelectContent>
+              </Select>
+            </>
+          )}
         </div>
 
         <Button className="w-full mt-1" type="submit" disabled={isLoading}>
