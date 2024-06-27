@@ -7,6 +7,7 @@ export default async function getOpenIssuesForPrincipal() {
 
     const issues = await prisma.issue.findMany({
       where: {
+        issueStatus: "Open",
         createdAt: {
           lte: twoDaysAgo,
         },
