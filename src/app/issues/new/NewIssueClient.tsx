@@ -78,7 +78,7 @@ const NewIssueClient: React.FC<NewIssueClientProps> = ({ currentUser }) => {
         onSubmit={handleIssueSubmit}
         className="flex flex-col items-center gap-4 p-4 rounded bg-[#ebebeb] max-w-[500px] w-full"
       >
-        <h2 className="text-2xl font-bold">Create Issue</h2>
+        <h2 className="text-2xl font-bold">Specify your Issue</h2>
 
         <div className="flex flex-col gap-3 w-full">
           <Input

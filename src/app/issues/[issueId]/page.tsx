@@ -1,7 +1,8 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getIssueById from "@/app/actions/getIssueById";
 import CloseIssue from "@/components/CloseIssue";
-import { CircleCheck, CircleDot } from "lucide-react";
+import ReopenIssue from "@/components/ReopenIssue";
+import { CircleCheck, CircleDot, RefreshCcwDot } from "lucide-react";
 import moment from "moment";
 import React from "react";
 
@@ -28,6 +29,11 @@ const Issue: React.FC<IssueProps> = async ({ params: { issueId } }) => {
             {issue?.issueStatus === "Open" ? (
               <span className="px-3 py-2 bg-yellow-500 text-white font-bold flex items-center gap-2 rounded-full">
                 <CircleDot className="text-white" />
+                {issue?.issueStatus}
+              </span>
+            ) : issue?.issueStatus === "Reopen" ? (
+              <span className="px-3 py-2 bg-primary text-white font-bold flex items-center gap-2 rounded-full">
+                <RefreshCcwDot className="text-white" />
                 {issue?.issueStatus}
               </span>
             ) : (
@@ -79,8 +85,31 @@ const Issue: React.FC<IssueProps> = async ({ params: { issueId } }) => {
         )}
 
         {issue?.issueStatus === "Closed" && (
-          <div className="border border-orange-400 px-2 py-1 bg-orange-100 w-fit rounded-full text-[14px] font-semibold">
-            Closed on {moment(issue?.updatedAt).fromNow()}
+          <div className="flex items-center gap-2">
+            <div className="border border-orange-400 px-2 py-1 bg-orange-100 w-fit rounded-full text-[14px] font-semibold">
+              Closed on {moment(issue?.updatedAt).fromNow()}
+            </div>
+
+            <ReopenIssue
+              issueId={issueId}
+              issue={issue}
+              currentUser={currentUser}
+            />
+          </div>
+        )}
+
+        {issue?.issueStatus === "Reopen" && (
+          <div className="flex flex-col gap-1">
+            <CloseIssue
+              issueId={issueId}
+              issue={issue}
+              currentUser={currentUser}
+              isReopen={true}
+            />
+
+            <div className="text-[15px] px-2 font-semibold text-gray-500">
+              Ropened on {moment(issue?.updatedAt).fromNow()}
+            </div>
           </div>
         )}
       </div>

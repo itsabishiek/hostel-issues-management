@@ -1,4 +1,4 @@
-import { CircleCheck, CircleDot } from "lucide-react";
+import { CircleCheck, CircleDot, RefreshCcwDot } from "lucide-react";
 import IssueCard from "../components/IssueCard";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <div className="bg-gray-100 rounded w-full mt-6 border border-gray-300 border-b-0">
       <div className="w-full bg-[#ebebeb] flex items-center justify-between gap-2 border-b border-gray-300 p-3 rounded">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 cursor-pointer font-bold">
             <CircleDot className="text-yellow-500" />
             Open
@@ -25,6 +25,10 @@ export default async function Home() {
           <div className="flex items-center gap-2 cursor-pointer font-bold">
             <CircleCheck className="text-green-600" />
             Closed
+          </div>
+          <div className="hidden sm:flex items-center gap-2 cursor-pointer font-bold">
+            <RefreshCcwDot className="text-primary" />
+            Reopen
           </div>
         </div>
 

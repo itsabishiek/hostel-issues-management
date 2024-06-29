@@ -1,5 +1,5 @@
 import { Issue } from "@prisma/client";
-import { CircleCheck, CircleDot } from "lucide-react";
+import { CircleCheck, CircleDot, RefreshCcwDot } from "lucide-react";
 import moment from "moment";
 import Link from "next/link";
 import React from "react";
@@ -13,6 +13,8 @@ const IssueCard: React.FC<IssueCardProps> = ({ issue }) => {
     <div className="p-3 flex gap-3 border-b border-gray-300">
       {issue.issueStatus === "Open" ? (
         <CircleDot className="text-yellow-500 mt-1" />
+      ) : issue.issueStatus === "Reopen" ? (
+        <RefreshCcwDot className="text-primary mt-1" />
       ) : (
         <CircleCheck className="text-green-600 mt-1" />
       )}

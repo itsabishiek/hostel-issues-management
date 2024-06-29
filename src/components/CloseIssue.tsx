@@ -12,12 +12,14 @@ type CloseIssueProps = {
   issueId: string;
   issue: Issue | null;
   currentUser: User | null;
+  isReopen?: boolean;
 };
 
 const CloseIssue: React.FC<CloseIssueProps> = ({
   issueId,
   issue,
   currentUser,
+  isReopen,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -58,7 +60,7 @@ const CloseIssue: React.FC<CloseIssueProps> = ({
   return (
     <div>
       <Button onClick={handleCloseIssue} disabled={isLoading}>
-        Close Issue
+        {isReopen ? "Report to principal and close issue" : "Close Issue"}
       </Button>
     </div>
   );

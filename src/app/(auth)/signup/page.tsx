@@ -47,8 +47,6 @@ const Signup: React.FC<SignupProps> = () => {
     setDepartment(value);
   };
 
-  console.log(!rollNo, !roomNo);
-
   const handleSignup = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
