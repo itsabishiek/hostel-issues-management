@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Issue Fix",
   description: "Issue Fix is a hostel issues management application.",
+  icons: {
+    icon: "/kr.ico",
+  },
 };
 
 export default async function RootLayout({
@@ -25,7 +28,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <main className="max-w-screen-xl w-full mx-auto p-4 flex flex-col justify-between min-h-screen">
-          <NextTopLoader color="#f97316" showSpinner={false} />
+          <NextTopLoader color="#2563eb" showSpinner={false} />
           <div>
             <Toaster />
             <Navbar currentUser={currentUser} />

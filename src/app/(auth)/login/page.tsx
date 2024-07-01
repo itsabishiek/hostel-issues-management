@@ -31,7 +31,7 @@ const Login: React.FC<LoginProps> = () => {
     const user = await signIn("credentials", {
       ...inputForm,
       redirect: true,
-      callbackUrl: "/",
+      callbackUrl: "/issues",
     });
 
     if (user?.ok) {

@@ -29,6 +29,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ children, currentUser }) => {
 
         <DropdownMenuSeparator />
 
+        <DropdownMenuItem asChild>
+          <Link href="/issues">
+            {currentUser?.role !== "Student" ? "All Issues" : "My Issues"}
+          </Link>
+        </DropdownMenuItem>
+
         {(currentUser?.role === "Principal" ||
           currentUser?.role === "Executive Director") && (
           <DropdownMenuItem asChild>
